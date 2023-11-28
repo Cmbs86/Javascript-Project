@@ -62,7 +62,9 @@ class PlaylistDB{
             return
         }else {
             const searchTerm = rs.question(`Enter ${filterBy}: `)
-            // 
+            // create
+            let filteredSongs = this.songs.filter(song => song[filterBy].toLowerCase().includes(searchTerm.toLowerCase()))
+            filteredSongs.forEach( song => console.log(song.describe()))
         }
     }
 }
