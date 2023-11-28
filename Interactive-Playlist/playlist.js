@@ -27,7 +27,7 @@ class Playlist {
 class PlaylistDB{
     constructor(filename){
         this.filename = filename
-        this.songs = this.readSongsFromJson()
+        this.songs = this.readSongsFromJson() // array
     }
 
     //Importing the data from songs.json
@@ -44,8 +44,26 @@ class PlaylistDB{
     }
     // method to show all the songs - "2"
     ShowSongs(){
-        this.songs.forEach( song => console.log(song.describe())) // it shows the songs of playlist accordinly with "describe" method
+        this.songs.forEach( song => console.log(song.describe())) // it shows the songs of playlist accordingly with "describe" method
 
+    }
+    saveSongstoJson(){
+        fs.writeFileSync(this.filename, JSON.stringify(this.songs)) // take the array and convert into a string and write the content insid the JSON file
+    }
+    addSong(song){
+        this.songs.push(song)
+        this.saveSongstoJson()
+    }
+
+    filterSongs(){
+        const filterBy = rs.question("Filter by (title | artist | genre | year | duration): ").toLowerCase()
+        if(filterBy != "title" && filterBy != "artist" && filterBy != "genre" && filterBy != "year" && filterBy != "duration"){
+            console.log("NOT A VALID OPTION")
+            return
+        }else {
+            const searchTerm = rs.question(`Enter ${filterBy}: `)
+            // 
+        }
     }
 }
 
@@ -69,7 +87,14 @@ while(true){
 
     switch(choice){
         case "1": 
-
+        const title = rs.question("Enter title: ")
+        const artist = rs.question("Enter artist: ")
+        const genre = rs.question("Enter genre: ")
+        const year = rs.question("Enter year: ")
+        const duration = rs.question("Enter duration: ")
+        const song = new Playlist(title, artist, genre, year, duration)
+        playlistDB.addSong(song)
+        console.log("Song added to the list")
         break
 
         case "2":
@@ -77,7 +102,7 @@ while(true){
         break
 
         case "3":
-
+            playlistDB.filterSongs()
         break
 
         case "4":
