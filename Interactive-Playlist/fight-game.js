@@ -61,26 +61,41 @@ function chooseCharacter(playerNumber){
     // Store the character that the player chooses. 
     let chosenCharacter;
 
-    switch(choice){
-        case 1 :
-            chosenCharacter = new Character("Ryu", 200, "Hurricane Kick", "Hadouken", 25, 45 )
-            break
-        case 2: 
-            chosenCharacter = new Character("Ken", 200, "Hurricane Kick", "Shoryuken", 25, 45 )
-            break
-        case 3: 
-            chosenCharacter = new Character("Guile", 200, "Sonic Boom", "Somersault Kick", 20, 50 )
-            break
-        case 4: 
-            chosenCharacter = new Character("Zangief", 220, "Cyclone Lariat", "Atomic Drop", 20, 55)
-            break
-        case 5: 
-            console.log("Game Over...")
+    if(choice === 1){
+        chosenCharacter = new Character("Ryu", 200, "Hurricane Kick", "Hadouken", 25, 45 )
+    }else if(choice === 2){
+       chosenCharacter = new Character("Ken", 200, "Hurricane Kick", "Shoryuken", 25, 45 )
+    }else if(choice === 3){
+        chosenCharacter = new Character("Guile", 200, "Sonic Boom", "Somersault Kick", 20, 50 )
+    }else if(choice === 4){
+        chosenCharacter = new Character("Zangief", 220, "Cyclone Lariat", "Atomic Drop", 20, 55)
+    }else if(choice === 5){
+        console.log(chalk.bold.italic("Game Over..."))
             process.exit()
-            default:
-                console.log("Exit the game!")
-
+    }else {
+        console.log("Exit the game!")
     }
+
+    // switch(choice){
+    //     case 1 :
+    //         chosenCharacter = new Character("Ryu", 200, "Hurricane Kick", "Hadouken", 25, 45 )
+    //         break
+    //     case 2: 
+    //         chosenCharacter = new Character("Ken", 200, "Hurricane Kick", "Shoryuken", 25, 45 )
+    //         break
+    //     case 3: 
+    //         chosenCharacter = new Character("Guile", 200, "Sonic Boom", "Somersault Kick", 20, 50 )
+    //         break
+    //     case 4: 
+    //         chosenCharacter = new Character("Zangief", 220, "Cyclone Lariat", "Atomic Drop", 20, 55)
+    //         break
+    //     case 5: 
+    //         console.log("Game Over...")
+    //         process.exit()
+    //         default:
+    //             console.log("Exit the game!")
+
+    // }
 
     console.log(chalk.blue.bold(`Player ${playerNumber}, you have chosen ${chosenCharacter.name}!`))
     return chosenCharacter
