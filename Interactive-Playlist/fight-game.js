@@ -1,4 +1,5 @@
 import rs from "readline-sync"
+import chalk from "chalk"
 console.clear
 class Character{
     constructor(name, health, normalAttackName, specialAttackName, normalAttackDamage, specialAttackDamage){
@@ -11,7 +12,8 @@ class Character{
     }
  // attack method: takes a target and amount of damage. logs message, and call method "takedamage"
     attack(target, damage, attackName){
-        console.log(`${this.name} uses ${attackName} on ${target.name} and inflicts ${damage} damage!`)
+        console.log(chalk.red.bold(`${this.name} uses ${attackName} on ${target.name} and inflicts ${damage} damage!`))
+        console.log("------------------------------\n")
         target.takeDamage(damage)
   
        
@@ -22,8 +24,8 @@ class Character{
 //takedamage method: subracts the specified damage from character's health and logs updated health.
     takeDamage(damage){
         this.health -= damage;
-        console.log(`${this.name} has ${this.health} health remaining`)
-        console.log("------------------------------")
+        console.log(chalk.yellow.bold(`${this.name} has ${this.health} health remaining`))
+        console.log("------------------------------\n")
         
     }
 // isAlive: check if character is still alive based of their health
@@ -46,27 +48,32 @@ class Character{
 // chooseCharacter function is responsible for letting each player choose their character
 //It displays a menu with character options and uses readlineSync to the the player's choice.
 function chooseCharacter(playerNumber){
-    console.log("------------------------------")
-    console.log(`Player ${playerNumber}, select your character`)
-    console.log("1. Ryu")
-    console.log("2. Ken")
-    console.log("3. Guile")
-    console.log("4. Zangief")
-    console.log("5. Exit the Game")
-    console.log("-------------------------------")
-    const choice = parseInt(rs.question(`Player ${playerNumber}, choose your character (1-4)\n> `))
+    console.log("-------------------------------------\n")
+    console.log(chalk.bold(`Player ${playerNumber}, select your character:`))
+    console.log(chalk.blue.bold("1. Ryu"))
+    console.log(chalk.yellow.bold("2. Ken"))
+    console.log(chalk.green.bold("3. Guile"))
+    console.log(chalk.red.bold("4. Zangief"))
+    console.log(chalk.italic.bold("5. Exit the Game"))
+    console.log("-------------------------------------\n")
+    const choice = parseInt(rs.question(chalk.bold(`Player ${playerNumber}, choose your character (1-4)\n-------------------------------------\n> `)))
    
-    
+    // Store the character that the player chooses. 
+    let chosenCharacter;
 
     switch(choice){
         case 1 :
-            return new Character("Ryu", 200, "Hurricane Kick", "Hadouken", 25, 45 )
+            chosenCharacter = new Character("Ryu", 200, "Hurricane Kick", "Hadouken", 25, 45 )
+            break
         case 2: 
-            return new Character("Ken", 200, "Hurricane Kick", "Shoryuken", 25, 45 )
+            chosenCharacter = new Character("Ken", 200, "Hurricane Kick", "Shoryuken", 25, 45 )
+            break
         case 3: 
-            return new Character("Guile", 200, "Sonic Boom", "Somersault Kick", 20, 50 )
+            chosenCharacter = new Character("Guile", 200, "Sonic Boom", "Somersault Kick", 20, 50 )
+            break
         case 4: 
-            return new Character("Zangief", 220, "Cylone Lariat", "Atomic Drop", 20, 55)
+            chosenCharacter = new Character("Zangief", 220, "Cyclone Lariat", "Atomic Drop", 20, 55)
+            break
         case 5: 
             console.log("Game Over...")
             process.exit()
@@ -74,24 +81,28 @@ function chooseCharacter(playerNumber){
                 console.log("Exit the game!")
 
     }
+
+    console.log(chalk.blue.bold(`Player ${playerNumber}, you have chosen ${chosenCharacter.name}!`))
+    return chosenCharacter
 }
 
-// they create "player1 and player 2" by calling chooseCharacter function for each player
+// they reate "player1 and player 2" by calling chooseCharacter function for each player
 const player1 = chooseCharacter(1)
 const player2 = chooseCharacter(2)
 
+// while loop checks if both players are alive and keep calling new rounds until one of the players is below the condition "< 0"
 while(player1.isAlive() && player2.isAlive()){
     console.clear
-    console.log("\n--- Round ---")
+    console.log(chalk.bold("\n--- Round ---"))
 
     //Player 1's turn
-    console.log(`${player1.name}'s turn:`)
-    console.log(`1. ${player1.normalAttackName}`)
-    console.log(`2. ${player1.specialAttackName}`)
+    console.log(chalk.bold(`${player1.name}'s turn:`))
+    console.log(chalk.bold(`1. ${player1.normalAttackName}`))
+    console.log(chalk.bold(`2. ${player1.specialAttackName}`))
     console.log("----------------------")
 
-    const choice1 = parseInt(rs.question("Choose an attack (1-2: "))
-    console.log("------------------------------")
+    const choice1 = parseInt(rs.question("Choose an attack (1-2): "))
+    console.log("------------------------------\n")
 
     if(choice1 === 1){
         player1.normalAttack(player2)
@@ -107,13 +118,13 @@ while(player1.isAlive() && player2.isAlive()){
     }
 
     //Player's 2 turn
-    console.log(`${player2.name}'s turn:`)
-    console.log(`1. ${player2.normalAttackName}`)
-    console.log(`2. ${player2.specialAttackName}`)
-    console.log("------------------------------")
+    console.log(chalk.bold(`${player2.name}'s turn:`))
+    console.log(chalk.bold(`1. ${player2.normalAttackName}`))
+    console.log(chalk.bold(`2. ${player2.specialAttackName}`))
+    console.log("------------------------------\n")
 
-    const choice2 = parseInt(rs.question(`Choose an attack (1-2):`))
-    console.log("------------------------------")
+    const choice2 = parseInt(rs.question(chalk.bold(`Choose an attack (1-2):`)))
+    console.log("------------------------------\n")
 
     if(choice2 === 1){
         player2.normalAttack(player1)
@@ -124,7 +135,7 @@ while(player1.isAlive() && player2.isAlive()){
     }
 
     if(!player1.isAlive()){
-        console.log(`Congratulations! ${player1.name} has been defetead. ${player2.name} wins`)
+        console.log(`Congratulations! ${player1.name} has been defetead. ${player2.name} wins!`)
         break
     }
 
