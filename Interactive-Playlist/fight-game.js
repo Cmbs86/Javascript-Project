@@ -12,7 +12,7 @@ class Character{
     }
  // attack method: takes a target and amount of damage. logs message, and call method "takedamage"
     attack(target, damage, attackName){
-        console.log(chalk.red.bold(`${this.name} uses ${attackName} on ${target.name} and inflicts ${damage} damage!`))
+        console.log(chalk.red.bold(`${this.name} uses ${attackName} on ${target.name} and inflicts ${damage} damage!\n`))
         console.log("------------------------------\n")
         target.takeDamage(damage)
   
@@ -24,7 +24,7 @@ class Character{
 //takedamage method: subracts the specified damage from character's health and logs updated health.
     takeDamage(damage){
         this.health -= damage;
-        console.log(chalk.yellow.bold(`${this.name} has ${this.health} health remaining`))
+        console.log(chalk.yellow.bold(`${this.name} has ${this.health} health remaining\n`))
         console.log("------------------------------\n")
         
     }
@@ -32,7 +32,7 @@ class Character{
     isAlive(){
         return this.health > 0;
     }
-// normal and specialAttack methods are conveniene methods for performing attacks with certain damage values.
+// normal and specialAttack methods are convenient methods for performing attacks with certain damage values.
     normalAttack(target){
         this.attack(target, this.normalAttackDamage, this.normalAttackName)
 
@@ -97,7 +97,7 @@ function chooseCharacter(playerNumber){
 
     // }
 
-    console.log(chalk.blue.bold(`Player ${playerNumber}, you have chosen ${chosenCharacter.name}!`))
+    console.log(chalk.green.bold(`Player ${playerNumber}, you have chosen ${chosenCharacter.name}!`))
     return chosenCharacter
 }
 
@@ -108,15 +108,15 @@ const player2 = chooseCharacter(2)
 // while loop checks if both players are alive and keep calling new rounds until one of the players is below the condition "< 0"
 while(player1.isAlive() && player2.isAlive()){
     console.clear
-    console.log(chalk.bold("\n--- Round ---"))
+    console.log(chalk.bold("\n--- Round ---\n"))
 
     //Player 1's turn
-    console.log(chalk.bold(`${player1.name}'s turn:`))
+    console.log(chalk.bold(`${player1.name}'s turn:\n`))
     console.log(chalk.bold(`1. ${player1.normalAttackName}`))
     console.log(chalk.bold(`2. ${player1.specialAttackName}`))
     console.log("----------------------")
 
-    const choice1 = parseInt(rs.question("Choose an attack (1-2): "))
+    const choice1 = parseInt(rs.question(chalk.bold("Choose an attack (1-2):\n ")))
     console.log("------------------------------\n")
 
     if(choice1 === 1){
@@ -124,11 +124,12 @@ while(player1.isAlive() && player2.isAlive()){
     } else if(choice1 === 2){
         player1.specialAttack(player2)
     } else{
-        console.log("Invalid choice. Skipping turn.")
+        console.log(chalk.bold("Invalid choice. Skipping turn.\n"))
+        console.log("------------------------------\n")
     }
 
     if(!player2.isAlive()){
-        console.log(`Congratulations! ${player2.name} has been defetead. ${player1.name} wins`)
+        console.log(chalk.bold.magenta(`Congratulations! ${player2.name} has been defetead. ${player1.name} wins\n`))
         break
     }
 
@@ -146,11 +147,12 @@ while(player1.isAlive() && player2.isAlive()){
     } else if(choice2 === 2){
         player2.specialAttack(player1)
     } else{
-        console.log("Invalid choice. Skipping turn.")
+        console.log(chalk.bold("Invalid choice. Skipping turn.\n"))
+        console.log("------------------------------\n")
     }
 
     if(!player1.isAlive()){
-        console.log(`Congratulations! ${player1.name} has been defetead. ${player2.name} wins!`)
+        console.log(chalk.bold.blue(`Congratulations! ${player1.name} has been defetead. ${player2.name} wins!\n`))
         break
     }
 
