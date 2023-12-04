@@ -30,7 +30,7 @@ class Character{
     }
 // isAlive: check if character is still alive based of their health
     isAlive(){
-        return this.health > 0;
+        return this.health >= 0;
     }
 // normal and specialAttack methods are convenient methods for performing attacks with certain damage values.
     normalAttack(target){
@@ -49,13 +49,14 @@ class Character{
 //It displays a menu with character options and uses readlineSync to the the player's choice.
 function chooseCharacter(playerNumber){
     console.log("-------------------------------------\n")
-    console.log(chalk.bold(`Player ${playerNumber}, select your character:`))
+    console.log(chalk.bold(`Player ${playerNumber}, select your character:\n`))
     console.log(chalk.blue.bold("1. Ryu"))
     console.log(chalk.yellow.bold("2. Ken"))
     console.log(chalk.green.bold("3. Guile"))
     console.log(chalk.red.bold("4. Zangief"))
     console.log(chalk.italic.bold("5. Exit the Game"))
     console.log("-------------------------------------\n")
+    // parseInt : used to convert the user input to a integer, so that it can be compared and used.
     const choice = parseInt(rs.question(chalk.bold(`Player ${playerNumber}, choose your character (1-4)\n-------------------------------------\n> `)))
    
     // Store the character that the player chooses. 
@@ -73,7 +74,7 @@ function chooseCharacter(playerNumber){
         console.log(chalk.bold.italic("Game Over..."))
             process.exit()
     }else {
-        console.log("Exit the game!")
+        console.log("Exit the game!\n")
     }
 
     // switch(choice){
@@ -129,7 +130,7 @@ while(player1.isAlive() && player2.isAlive()){
     }
 
     if(!player2.isAlive()){
-        console.log(chalk.bold.magenta(`Congratulations! ${player2.name} has been defetead. ${player1.name} wins\n`))
+        console.log(chalk.bold.magenta(`Congratulations! ${player2.name} has been defetead. ${player1.name} wins!\n`))
         break
     }
 
