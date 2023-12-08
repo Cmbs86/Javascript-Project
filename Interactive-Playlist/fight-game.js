@@ -1,49 +1,7 @@
+import { Character } from "./Character-class.js" 
 import rs from "readline-sync"
 import chalk from "chalk"
 console.clear
-class Character{
-    constructor(name, health, normalAttackName, specialAttackName, normalAttackDamage, specialAttackDamage){
-        this.name = name
-        this.health = health
-        this.normalAttackName = normalAttackName
-        this.specialAttackName = specialAttackName
-        this.normalAttackDamage = normalAttackDamage
-        this.specialAttackDamage = specialAttackDamage
-    }
- // attack method: takes a target and amount of damage. logs message, and call method "takedamage"
-    attack(target, damage, attackName){
-        console.log(chalk.red.bold(`${this.name} uses ${attackName} on ${target.name} and inflicts ${damage} damage!\n`))
-        console.log("------------------------------\n")
-        target.takeDamage(damage)
-  
-       
-
-    }
-
-    
-//takedamage method: subracts the specified damage from character's health and logs updated health.
-    takeDamage(damage){
-        this.health -= damage;
-        console.log(chalk.yellow.bold(`${this.name} has ${this.health} health remaining\n`))
-        console.log("------------------------------\n")
-        
-    }
-// isAlive: check if character is still alive based of their health
-    isAlive(){
-        return this.health >= 0;
-    }
-// normal and specialAttack methods are convenient methods for performing attacks with certain damage values.
-    normalAttack(target){
-        this.attack(target, this.normalAttackDamage, this.normalAttackName)
-
-
-    }
-
-    specialAttack(target){
-        this.attack(target, this.specialAttackDamage, this.specialAttackName)
-    }
-
-}
 
 // chooseCharacter function is responsible for letting each player choose their character
 //It displays a menu with character options and uses readlineSync to the the player's choice.
@@ -63,13 +21,13 @@ function chooseCharacter(playerNumber){
     let chosenCharacter;
 
     if(choice === 1){
-        chosenCharacter = new Character("Ryu", 200, "Hurricane Kick", "Hadouken", 25, 45 )
+        chosenCharacter = new Character("Ryu", 200, "Hurricane Kick", "Hadouken", 25, 45, 20 )
     }else if(choice === 2){
-       chosenCharacter = new Character("Ken", 200, "Hurricane Kick", "Shoryuken", 25, 45 )
+       chosenCharacter = new Character("Ken", 200, "Hurricane Kick", "Shoryuken", 25, 45, 20 )
     }else if(choice === 3){
-        chosenCharacter = new Character("Guile", 200, "Sonic Boom", "Somersault Kick", 20, 50 )
+        chosenCharacter = new Character("Guile", 200, "Sonic Boom", "Somersault Kick", 20, 50, 20 )
     }else if(choice === 4){
-        chosenCharacter = new Character("Zangief", 220, "Cyclone Lariat", "Atomic Drop", 20, 55)
+        chosenCharacter = new Character("Zangief", 220, "Cyclone Lariat", "Atomic Drop", 20, 55, 20)
     }else if(choice === 5){
         console.log(chalk.bold.italic("Game Over..."))
             process.exit()
@@ -123,7 +81,7 @@ while(player1.isAlive() && player2.isAlive()){
     if(choice1 === 1){
         player1.normalAttack(player2)
     } else if(choice1 === 2){
-        player1.specialAttack(player2)
+        player1.specialAttack(player2, 10)
     } else{
         console.log(chalk.bold("Invalid choice. Skipping turn.\n"))
         console.log("------------------------------\n")
@@ -135,18 +93,18 @@ while(player1.isAlive() && player2.isAlive()){
     }
 
     //Player's 2 turn
-    console.log(chalk.bold(`${player2.name}'s turn:`))
+    console.log(chalk.bold(`${player2.name}'s turn:\n`))
     console.log(chalk.bold(`1. ${player2.normalAttackName}`))
     console.log(chalk.bold(`2. ${player2.specialAttackName}`))
     console.log("------------------------------\n")
 
-    const choice2 = parseInt(rs.question(chalk.bold(`Choose an attack (1-2):`)))
+    const choice2 = parseInt(rs.question(chalk.bold(`Choose an attack (1-2):\n`)))
     console.log("------------------------------\n")
 
     if(choice2 === 1){
         player2.normalAttack(player1)
     } else if(choice2 === 2){
-        player2.specialAttack(player1)
+        player2.specialAttack(player1, 10)
     } else{
         console.log(chalk.bold("Invalid choice. Skipping turn.\n"))
         console.log("------------------------------\n")
@@ -160,4 +118,3 @@ while(player1.isAlive() && player2.isAlive()){
 
 
 }
-
